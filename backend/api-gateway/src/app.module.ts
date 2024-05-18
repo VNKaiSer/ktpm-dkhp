@@ -1,7 +1,7 @@
 import { ClientsModule, Transport } from '@nestjs/microservices';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { AppController } from './controllers/app.controller';
+import { AppService } from './services/app.service';
 import { Module } from '@nestjs/common';
 import { join } from 'path';
 
@@ -17,9 +17,27 @@ import { join } from 'path';
           url: 'localhost:50051',
         },
       },
+      {
+        name: 'MODULE_SERVICE',
+        transport: Transport.KAFKA,
+        options: {
+          client: {
+            brokers: ['103.72.99.224:9092'],
+            connectionTimeout: 3000,
+            retry: {
+              initialRetryTime: 100,
+              retries: 8,
+            },
+          },
+          consumer: {
+            groupId: 'module-consumer',
+          },
+        },
+      },
     ]),
+
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

@@ -18,6 +18,7 @@ model accounts {
   student_id    String @unique
   email         String @unique
   password_hash String
+  refresh_token String
   create_at     DateTime @default(now())
   update_at     DateTime @updatedAt @default(now())
 }

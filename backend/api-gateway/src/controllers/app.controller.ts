@@ -1,7 +1,8 @@
-import { Controller, Get, Inject, OnModuleInit } from '@nestjs/common';
+import { Controller, Get, Inject, OnModuleInit, UseGuards } from '@nestjs/common';
 
-import { AppService } from './app.service';
+import { AppService } from '../services/app.service';
 import { ClientGrpc } from '@nestjs/microservices';
+import { AtGuard } from 'src/common/guards';
 
 @Controller()
 export class AppController implements OnModuleInit {
@@ -9,7 +10,7 @@ export class AppController implements OnModuleInit {
   constructor(
     private readonly appService: AppService,
     @Inject('USERS_SERVICE') private client: ClientGrpc,
-  ) {}
+  ) { }
   onModuleInit() {
     this.usersService = this.client.getService('UsersService');
   }
@@ -22,5 +23,11 @@ export class AppController implements OnModuleInit {
   @Get('users')
   async getUsers() {
     return this.usersService.GetUser({ email: 'Jon@gmail.com' });
+  }
+
+  @UseGuards(AtGuard)
+  @Get('module')
+  getModule() {
+    return this.appService.getModule();
   }
 }

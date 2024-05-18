@@ -3,87 +3,50 @@ import { Controller, Get } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { Account } from './entities/Account';
 import { PrismaService } from './prisma/prisma.service';
-import * as bcrypt from 'bcrypt';
+import { AppService } from './app.service';
+import { LoginResponsive } from './dtos/login-responsive.dto';
 
 @Controller()
 export class AppController {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly appService: AppService,
+  ) { }
 
   @Get()
   getHello(): string {
     return "I'm live!";
   }
 
-  // @GrpcMethod('AccountsService', 'Register')
-  // findOne(account: Account) {
-  //   console.log(account);
-  //   return account;
-  // }
-
   @GrpcMethod('AccountsService', 'Login')
-  async login(account: Account) {
-    console.log(await this.hashPassword(account.password));
-    const user = await this.prismaService.accounts.findUnique({
-      where: {
-        student_id: account.studentId,
-      },
-    });
-
-    if (await this.validatePassword(account.password, user.password_hash)) {
-      return {
-        status: 'success',
-        account: {
-          studentId: user.student_id,
-          email: user.email,
-          // password: user.password_hash,
-        },
+  async login(account: Account): Promise<LoginResponsive | any> {
+    const rs = await this.appService.signUp(account);
+    if (rs) {
+      const resp = {
+        status: 200,
+        data: rs,
       };
-    } else {
-      return {
-        status: 'fail',
-      };
+      return resp;
     }
+    return {
+      status: 500,
+      mess: '500 - Internal Service',
+    };
   }
 
   @GrpcMethod('AccountsService', 'Register')
-  async register(account: Account) {
-    console.log(account);
-    const password_hash = await this.hashPassword(account.password);
-    // console.log(password_hash);
-    const register = await this.prismaService.accounts.create({
-      data: {
-        email: account.email,
-        password_hash: password_hash,
-        student_id: account.studentId,
-      },
-    });
-
-    if (register) {
-      return {
-        status: 'success',
-        account: {
-          studentId: register.student_id,
-          email: register.email,
-          password: register.password_hash,
-        },
+  async register(account: Account): Promise<LoginResponsive | any> {
+    const rs = await this.appService.signUp(account);
+    if (rs) {
+      const resp = {
+        status: 200,
+        token: rs.access_token,
       };
-    } else {
-      return {
-        status: 'fail',
-      };
+      return resp;
     }
-  }
-
-  async hashPassword(password: string) {
-    const saltOrRounds = 10;
-    const hash = await bcrypt.hash(password, saltOrRounds);
-    return hash;
-  }
-
-  async validatePassword(
-    password: string,
-    storedHash: string,
-  ): Promise<boolean> {
-    return await bcrypt.compare(password, storedHash);
+    return {
+      status: 500,
+      mess: '500 - Internal Service',
+    };
   }
 }
