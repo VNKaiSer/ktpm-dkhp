@@ -36,7 +36,7 @@ const Home = () => {
                     <button onClick={handleLogout} className="logout-button">Đăng xuất</button>
                 </div>
                 <div className="avatar">
-                    <img src="https://cdn-img.thethao247.vn/origin_456x0/storage/files/haibui/2023/05/16/senyamiku-cosplay-nhan-vat-kafka-trong-honkai-star-rail-280653.jpg" alt="Avatar" />
+                    <img src="https://png.pngtree.com/png-clipart/20190921/original/pngtree-student-free-cartoon-character-png-image_4745962.jpg" alt="Avatar" />
                 </div>
                 <div className="links">
                     <Link to="/Home">THÔNG TIN SINH VIÊN</Link> <br /><br />
