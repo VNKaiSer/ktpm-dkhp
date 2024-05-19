@@ -61,10 +61,11 @@ Chia các service theo thức năng gồm có 7 service chính:
 - **NotificationService**: Service này chịu trách nhiệm gửi thông báo qua email cho sinh viên sau khi họ đăng ký thành công hoặc khi có các sự kiện quan trọng khác trong hệ thống.
 
 - **AnalysisService**: Service này cung cấp các tính năng để theo dõi và phân tích hoạt động của hệ thống, bao gồm thống kê về số lượng sinh viên đăng ký, tình trạng của các lớp học, và các hoạt động khác
+- Giải quyết vấn đề sync giữa microservice bằng mô hình EDA pub-sub bằng messenge queue Kafka cho việc đồng bộ hoá dữ liệu ở các services
 
 ## 3.4 Các vấn đề cần giải quyết trong microservice
 
-## 3.4.1Giao tiếp giữa các service:
+## 3.4.1 Giao tiếp giữa các service:
 
 Sử dụng Kafka và gRPC để giao tiếp với các service
 
@@ -80,5 +81,6 @@ Sử dụng Kafka và gRPC để giao tiếp với các service
 - MySQL
 - Kafka
 - AWS services
+- Redis (Caches)
 
 # 5. Hướng dẫn cài đặt dự án
