@@ -12,6 +12,6 @@ export class AppController {
 
   @Get('send-mail')
   sendMail() {
-    this.appService.sendMail();
+    return this.appService.sendMail();
   }
 }
