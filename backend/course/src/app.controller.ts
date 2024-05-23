@@ -1,8 +1,8 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
-import { EventPattern, MessagePattern } from '@nestjs/microservices';
+import { MessagePattern } from '@nestjs/microservices';
 
-@Controller()
+@Controller('course')
 export class AppController {
   constructor(private readonly appService: AppService) { }
 
@@ -15,5 +15,10 @@ export class AppController {
   getModule() {
     console.log('get module');
     return this.appService.getModule();
+  }
+
+  @Get('all-course')
+  async getAllCourse() {
+    return this.appService.getAllCourse();
   }
 }

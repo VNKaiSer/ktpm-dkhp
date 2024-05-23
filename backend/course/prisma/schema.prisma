@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model course {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  codeCourse String
+  codeSub    String
+  credits    Int
+  name       String
+  pracNum    Int
+  theoryNum  Int
+}
+
+model studyProgram {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  /// Multiple data types found: Array(String): 50%, Array(String (ObjectId)): 50% out of 2 sampled entries
+  electiveCourses String[]
+  requiredCourses String[]
+  semester        String
+  totalCredits    String
+}
