@@ -14,7 +14,7 @@ import { AuthController } from './controllers/auth.controller';
         options: {
           package: 'auth',
           protoPath: join(__dirname, 'protos/users.proto'),
-          url: 'localhost:50051',
+          url: process.env.SERVER_AUTH_URL,
         },
       }
     ]),

@@ -11,7 +11,7 @@ async function bootstrap() {
     options: {
       package: 'auth',
       protoPath: join(__dirname, 'protos/users.proto'),
-      url: 'localhost:50051',
+      url: process.env.GRPC_URL,
     },
   });
   await app.startAllMicroservices();
