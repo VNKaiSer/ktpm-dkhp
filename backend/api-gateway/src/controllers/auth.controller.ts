@@ -2,6 +2,7 @@ import { Body, Controller, Get, Inject, OnModuleInit, Post } from '@nestjs/commo
 
 import { ClientGrpc } from '@nestjs/microservices';
 import { ApiBody } from '@nestjs/swagger';
+import { lastValueFrom } from 'rxjs';
 import { AuthDto } from 'src/dto/auth.dto';
 
 @Controller('v1/auth')
@@ -21,11 +22,11 @@ export class AuthController implements OnModuleInit {
         if (!params) {
             return { status: 500, mess: '500 - Internal Service' }
         }
-        console.log(params)
-        return this.usersService.Login({
+        const rs = this.usersService.Login({
             studentId: params.student_id,
             password: params.password
         });
+        return rs
     }
 
 

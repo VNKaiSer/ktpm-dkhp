@@ -1,4 +1,4 @@
 export class AuthDto {
-  student_id: string;
+  studentId: string;
   password: string;
 }

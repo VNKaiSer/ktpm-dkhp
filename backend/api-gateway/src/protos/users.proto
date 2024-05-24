@@ -7,8 +7,6 @@ service AuthService {
   rpc Register(Account) returns (RegisterResponse) {}
 }
 
-
-
 message Account {
   string studentId = 1;
   string password = 2;
@@ -24,7 +22,8 @@ message LoginRequest {
 message LoginResponse {
   optional Account account = 1;
   string status = 2;
-  optional string mess = 3;
+  string token = 3;
+  optional string mess = 4;
 }
 
 message RegisterResponse {

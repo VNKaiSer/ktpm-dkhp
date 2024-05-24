@@ -12,11 +12,12 @@ export class AppService {
     private prismaService: PrismaService,
     private jwtService: JwtService,
   ) { }
-  async logIn(data: AuthDto): Promise<Tokens> {
+  async logIn(data: AuthDto): Promise<{ access_token: string } | null> {
+    console.log('Data', data);
     try {
       const user = await this.prismaService.accounts.findUnique({
         where: {
-          student_id: data.student_id,
+          student_id: data.studentId,
         },
       });
 
@@ -29,7 +30,6 @@ export class AppService {
     } catch (error) {
       return null;
     }
-
   }
   hashData(data: string) {
     return bcrypt.hashSync(data, bcrypt.genSaltSync(10));
@@ -53,20 +53,21 @@ export class AppService {
     };
   }
 
-  // async signUp(data: Account): Promise<Tokens> {
-  //   const passwordHash = this.hashData(data.password);
-  //   const user = await this.prismaService.accounts.create({
-  //     data: {
-  //       student_id: data.studentId,
-  //       email: data.email,
-  //       password_hash: passwordHash,
-  //       refresh_token: '',
-  //     },
-  //   });
-  //   const tokens = await this.getTokens(user.id, user.student_id);
-  //   this.updateRefeshToken(user.id, tokens.refresh_token);
-  //   return tokens;
-  // }
+  async signUp(data: Account): Promise<Tokens> {
+    console.log(data);
+    const passwordHash = this.hashData(data.password);
+    const user = await this.prismaService.accounts.create({
+      data: {
+        student_id: data.studentId,
+        email: data.email,
+        password_hash: passwordHash,
+        refresh_token: '',
+      },
+    });
+    const tokens = await this.getTokens(user.id, user.student_id);
+    this.updateRefeshToken(user.id, tokens.refresh_token);
+    return tokens;
+  }
 
   async updateRefeshToken(userId: number, refreshToken: string) {
     const hashedRefreshToken = this.hashData(refreshToken);
