@@ -2,7 +2,7 @@ import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 import { MessagePattern } from '@nestjs/microservices';
 
-@Controller('course')
+@Controller('v1/course')
 export class AppController {
   constructor(private readonly appService: AppService) { }
 

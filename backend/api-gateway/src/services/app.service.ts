@@ -5,15 +5,15 @@ import { ClientKafka } from '@nestjs/microservices';
 @Injectable()
 export class AppService {
   constructor(
-    @Inject('MODULE_SERVICE') private client: ClientKafka
+    // @Inject('MODULE_SERVICE') private client: ClientKafka
   ) { }
   getHello(): string {
     return 'Hello World!';
   }
 
-  getModule() {
-    this.client.emit('get-module', 'Module');
-  }
+  // getModule() {
+  //   this.client.emit('get-module', 'Module');
+  // }
 
 
 }

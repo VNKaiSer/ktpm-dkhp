@@ -1,20 +1,31 @@
-import { Controller, Get, Inject, OnModuleInit } from '@nestjs/common';
+import { Body, Controller, Get, Inject, OnModuleInit, Post } from '@nestjs/common';
 
 import { ClientGrpc } from '@nestjs/microservices';
+import { ApiBody } from '@nestjs/swagger';
+import { AuthDto } from 'src/dto/auth.dto';
 
-@Controller()
-export class AppController implements OnModuleInit {
+@Controller('v1/auth')
+export class AuthController implements OnModuleInit {
     private usersService;
     constructor(
-        @Inject('USERS_SERVICE') private client: ClientGrpc,
+        @Inject('AUTH_SERVICE') private client: ClientGrpc,
     ) { }
     onModuleInit() {
-        this.usersService = this.client.getService('UsersService');
+        this.usersService = this.client.getService('AuthService');
     }
 
-    @Get('users')
-    async getUsers() {
-        return this.usersService.GetUser({ email: 'Jon@gmail.com' });
+    @Post('login')
+    async createUser(
+        @Body() params: AuthDto
+    ) {
+        if (!params) {
+            return { status: 500, mess: '500 - Internal Service' }
+        }
+        console.log(params)
+        return this.usersService.Login({
+            studentId: params.student_id,
+            password: params.password
+        });
     }
 
 

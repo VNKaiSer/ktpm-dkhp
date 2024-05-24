@@ -5,11 +5,11 @@ export class AuthDto {
   @IsNotEmpty()
   @IsString()
   @ApiProperty({
-    name: 'username',
+    name: 'student_id',
     description: 'Username',
     example: 'username',
   })
-  username: string;
+  student_id: string;
   @IsNotEmpty()
   @IsString()
   @ApiProperty({
