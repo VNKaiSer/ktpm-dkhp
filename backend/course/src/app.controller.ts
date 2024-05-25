@@ -20,6 +20,10 @@ export class AppController {
 
   @GrpcMethod('CourseService', 'GetCourseById')
   async getCourseByID(parmas: CourseIdDto) {
-    return this.appService.getCourseByID(parmas.id);
+    const rs = await this.appService.getCourseByID(parmas.id);
+    return {
+      ...rs,
+      prerequisite: rs.Prerequisite,
+    };
   }
 }

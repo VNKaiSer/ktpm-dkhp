@@ -21,6 +21,7 @@ message Course {
     string name = 5;
     int32 pracNum = 6;
     int32 theoryNum = 7;
+    string prerequisite = 8;
 }
 
 message CourseId {

@@ -14,13 +14,24 @@ export class AppService {
   }
   async getAllCourse(): Promise<any> {
     const courses = await this.prismaService.course.findMany();
-    return { courses }
+    const updatedCourses = courses.map((course) => ({
+      ...course,
+      prerequisite: course.Prerequisite,
+      Prerequisite: undefined, // xóa thuộc tính Prerequisite
+    }));
+
+
+    // Lọc bỏ thuộc tính Prerequisite nếu bạn không muốn nó hiện diện trong kết quả cuối cùng
+    const finalCourses = updatedCourses.map(
+      ({ Prerequisite, ...rest }) => rest,
+    );
+    return { courses: finalCourses };
   }
 
   async getCourseByID(id: string) {
-    return this.prismaService.course.findUnique({
+    return await this.prismaService.course.findUnique({
       where: {
-        id: id
+        id: id,
       },
     });
   }

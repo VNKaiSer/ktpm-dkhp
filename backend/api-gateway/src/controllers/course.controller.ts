@@ -24,4 +24,5 @@ export class CourseController implements OnModuleInit {
         return this.coursesService.GetAllCourse({});
     }
 
+
 }
