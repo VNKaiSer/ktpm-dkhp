@@ -7,6 +7,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model classRegistered {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  clsName    String
+  codeCourse String
+  credits    Int
+  name       String
+  schedule   String
+  status     String
+  student_id String
+  teacher    String
+}
+
 model course {
   id           String @id @default(auto()) @map("_id") @db.ObjectId
   Prerequisite String
@@ -20,7 +32,6 @@ model course {
 
 model studyProgram {
   id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  /// Multiple data types found: Array(String): 11.1%, Array(String (ObjectId)): 88.9% out of 9 sampled entries
   electiveCourses String[]
   requiredCourses String[]
   semester        String

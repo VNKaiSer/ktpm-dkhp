@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "./../css/HomeStyle.css";
-
+// require('dotenv').config()
+import axios from "axios";
 const Course = () => {
   const studentData = {
     name: "Nguyen Van A",
-    studentId: "123456",
+    studentId: "20077931",
     gender: "Nam",
     course: "2021-2022",
     majors: "Kỹ thuật phần mềm",
@@ -18,7 +19,7 @@ const Course = () => {
     let [startYear, endYear] = currentCourse.split("-").map(Number);
 
     for (let i = 0; i < 5; i++) {
-      for (let j = 1; j <= 3; j++) {
+      for (let j = 1; j <= 2; j++) {
         courses.push(`HK${j} (${startYear}-${endYear})`);
       }
       startYear++;
@@ -34,29 +35,106 @@ const Course = () => {
   const [selectedClass, setSelectedClass] = useState(null);
   const [registeredClasses, setRegisteredClasses] = useState([]);
   const [courses, setCourses] = useState([]);
+  const [studyProgram, setStudyProgram] = useState([]);
+  const [courseBySem, setCourseBySem] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:5000/api/v1/course/all-course"
+        const response = await axios.get(
+          "http://localhost:4000/api/v1/courses"
         );
-        if (!response.ok) {
-          throw new Error("Failed to fetch courses");
-        }
-        const data = await response.json();
-        setCourses(data);
+        setCourses(response.data.courses);
       } catch (error) {
         console.error("Error fetching courses:", error);
       }
     };
-
+    const fetchSP = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8081/v1/course/getAllstuPro"
+        );
+        setStudyProgram(response.data);
+      } catch (error) {
+        console.error("Error fetching SP:", error);
+      }
+    };
+    const fetchCls = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8081/v1/course/getReCls"
+        );
+        setRegisteredClasses(response.data);
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+      }
+    };
     fetchData();
+    fetchSP();
+    fetchCls();
   }, []);
 
   const futureCourses = getFutureCourses(studentData.course);
+  const getCoursesDetails = async (courseIds) => {
+    try {
+      // Gọi API để lấy danh sách chi tiết của các học phần
+      const response = await axios.get("http://localhost:4000/api/v1/courses");
+      const coursesDetails = response.data.courses;
 
-  const handleCourseChange = (event) => {
-    setSemester(event.target.value);
+      // Lọc ra chi tiết của các học phần trong danh sách courseIds
+      const filteredCourses = coursesDetails.filter((course) =>
+        courseIds.includes(course.id)
+      );
+
+      return filteredCourses;
+    } catch (error) {
+      console.error("Error fetching courses details:", error);
+      return [];
+    }
+  };
+
+  const handleCourseChange = async (event) => {
+    const selectedIndex = event.target.selectedIndex;
+    const selectedSemester = event.target.options[selectedIndex].value;
+    setSemester(selectedSemester);
+    switch (selectedIndex) {
+      case 0:
+      case 1:
+      case 2:
+      case 3:
+      case 4:
+      case 5:
+      case 6:
+      case 7:
+      case 8:
+        const semesterNumber = selectedIndex + 1;
+        const selectedSemesterCourses = studyProgram.filter(
+          (course) => course.semester === `HỌC KÌ ${semesterNumber}`
+        );
+
+        const electiveCourses = selectedSemesterCourses.reduce(
+          (acc, course) => [...acc, ...course.electiveCourses],
+          []
+        );
+        const requiredCourses = selectedSemesterCourses.reduce(
+          (acc, course) => [...acc, ...course.requiredCourses],
+          []
+        );
+
+        console.log("All Courses:", [...electiveCourses, ...requiredCourses]);
+
+        // Lấy danh sách chi tiết của các học phần
+        const coursesDetails = await getCoursesDetails([
+          ...electiveCourses,
+          ...requiredCourses,
+        ]);
+        console.log("Courses Details:", coursesDetails);
+        setCourseBySem(coursesDetails);
+        break;
+      default:
+        console.log("Invalid semester index");
+        break;
+    }
   };
 
   const handleRegistrationTypeChange = (event) => {
@@ -72,14 +150,33 @@ const Course = () => {
     setSelectedClass(cls);
   };
 
-  const handleRegister = () => {
+  const handleRegister = (MHP, tenLop, lich, trangThai) => {
     if (
       selectedClass.registered >= selectedClass.capacity ||
       selectedClass.status === "Đã khóa"
     ) {
       alert("Không thể đăng ký lớp này. Sĩ số đã đầy hoặc lớp đã bị khóa.");
     } else {
-      setRegisteredClasses([...registeredClasses, selectedClass]);
+      const newData = {
+        codeCourse: MHP,
+        name: courseBySem.find((course) => course.codeCourse === selectedCourse)
+          .name,
+        clsName: tenLop,
+        credits: 3,
+        teacher: "To be assigned",
+        schedule: lich,
+        status: trangThai,
+        student_id: studentData.studentId,
+      };
+      axios
+        .post("http://localhost:8081/v1/course/create", newData)
+        .then((response) => {
+          console.log("New data added successfully:", response.data);
+        })
+        .catch((error) => {
+          console.error("Error adding new data:", error);
+        });
+      setRegisteredClasses([...registeredClasses, newData]);
       alert("Đăng ký thành công!");
     }
   };
@@ -102,29 +199,40 @@ const Course = () => {
     4203002009: [
       {
         id: 1,
-        classId: "420300377501",
-        name: "Lớp 1",
-        schedule: "Mon-Wed-Fri",
+        classId: "4203002009",
+        name: "Lớp A",
+        schedule: "tiết 1-3 (thứ 2-4-6)",
         capacity: 80,
         registered: 40,
         status: "Đang lên kế hoạch",
       },
       {
         id: 2,
-        classId: "420300377502",
-        name: "Lớp 2",
-        schedule: "Tue-Thu-Sat",
+        classId: "4203002009",
+        name: "Lớp B",
+        schedule: "tiết 4-6 (thứ 2-4-6)",
         capacity: 80,
-        registered: 80,
+        registered: 66,
         status: "Đang lên kế hoạch",
       },
     ],
     4203003240: [
       {
         id: 1,
-        classId: "420300377503",
-        name: "Lớp 3",
-        schedule: "Mon-Wed",
+        classId: "4203003240",
+        name: "Lớp A",
+        schedule: "tiết 7-9 (thứ 3-5-7)",
+        capacity: 80,
+        registered: 20,
+        status: "Đang lên kế hoạch",
+      },
+    ],
+    4203000941: [
+      {
+        id: 1,
+        classId: "4203000941",
+        name: "Lớp C",
+        schedule: "tiết 10-12 (thứ 3-5-7)",
         capacity: 80,
         registered: 20,
         status: "Đang lên kế hoạch",
@@ -227,23 +335,24 @@ const Course = () => {
               <th>Tên môn học</th>
               <th>TC</th>
               <th>Bắt buộc</th>
-              {/* <th>Học phần trước (a), tiên quyết (b), song hành (c)</th> */}
+              <th>Học phần trước (a), tiên quyết (b), song hành (c)</th>
               <th>Học phần tương đương</th>
             </tr>
           </thead>
           <tbody>
-            {courses.map((course) => (
+            {courseBySem.map((course, index) => (
               <tr
                 key={course._id}
                 onClick={() => handleCourseSelect(course.codeCourse)}
               >
-                <td>{course.codeSub}</td>
+                <td>{index + 1}</td>
                 <td>{course.codeSub}</td>
                 <td>{course.codeCourse}</td>
                 <td>{course.name}</td>
                 <td>{course.credits}</td>
                 {/* <td>{course.required ? 'X' : ''}</td> */}
-                <td></td>
+                <td>X</td>
+                <td>{course.Prerequisite}</td>
                 <td></td>
               </tr>
             ))}
@@ -276,7 +385,18 @@ const Course = () => {
                     <td>{cls.registered}</td>
                     <td>{cls.status}</td>
                     <td>
-                      <button onClick={handleRegister}>Đăng ký</button>
+                      <button
+                        onClick={() =>
+                          handleRegister(
+                            cls.classId,
+                            cls.name,
+                            cls.schedule,
+                            cls.status
+                          )
+                        }
+                      >
+                        Đăng ký
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -323,36 +443,29 @@ const Course = () => {
                 <th>STT</th>
                 <th>Mã HP</th>
                 <th>Tên môn học</th>
-                <th>Nhóm</th>
+                <th>Tên lớp</th>
                 <th>TC</th>
                 <th>Giảng viên</th>
-                <th>Thời gian</th>
+                <th>Lịch học</th>
                 <th>Trạng thái</th>
               </tr>
             </thead>
             <tbody>
-              {registeredClasses.map((cls, index) => (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{selectedCourse}</td>
-                  <td>
-                    {
-                      courses.find((course) => course.newId === selectedCourse)
-                        .name
-                    }
-                  </td>
-                  <td>{cls.name}</td>
-                  <td>
-                    {
-                      courses.find((course) => course.newId === selectedCourse)
-                        .credits
-                    }
-                  </td>
-                  <td>To be assigned</td>
-                  <td>{cls.schedule}</td>
-                  <td>{cls.status}</td>
-                </tr>
-              ))}
+              {registeredClasses.map(
+                (cls, index) =>
+                  cls.student_id === studentData.studentId && (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{cls.codeCourse}</td>
+                      <td>{cls.name}</td>
+                      <td>{cls.clsName}</td>
+                      <td>{cls.credits}</td>
+                      <td>{cls.teacher}</td>
+                      <td>{cls.schedule}</td>
+                      <td>{cls.status}</td>
+                    </tr>
+                  )
+              )}
             </tbody>
           </table>
         </div>

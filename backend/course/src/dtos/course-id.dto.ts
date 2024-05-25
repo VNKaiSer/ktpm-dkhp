@@ -1,3 +1,3 @@
 export class CourseIdDto {
-	id: string;
+  id: string;
 }

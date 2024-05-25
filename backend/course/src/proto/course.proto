@@ -5,6 +5,8 @@ package course;
 service CourseService {
     rpc GetAllCourse(Empty) returns (CourseList) {}
     rpc GetCourseById(CourseId) returns (Course) {}
+    rpc GetStudyProgram(Empty) returns (StudyProgramList) {}
+    rpc RegisterCourse(RegisterCourseRequest) returns (Empty) {}
 }
 
 message Empty {}
@@ -26,4 +28,27 @@ message Course {
 
 message CourseId {
     string id = 1;
+}
+
+message StudyProgram {
+    string id = 1;
+    string semester = 2;
+    int32 totalCredits = 3;
+    repeated string requiredCourses = 4;
+    repeated string electiveCourses = 5;
+}
+
+message StudyProgramList {
+    repeated StudyProgram studyPrograms = 1;
+}
+
+message RegisterCourseRequest {
+    string codeCourse = 1;
+    string name = 2;
+    string clsName = 3;
+    int32 credits = 4;
+    string teacher = 5;
+    string schedule = 6;
+    string status = 7;
+    string studentId = 8;
 }

@@ -2,6 +2,7 @@ import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 import { GrpcMethod } from '@nestjs/microservices';
 import { CourseIdDto } from './dtos/course-id.dto';
+import { RegisterCourseRequestDto } from './dtos/register-course-request.dto';
 
 @Controller('v1/course')
 export class AppController {
@@ -25,5 +26,16 @@ export class AppController {
       ...rs,
       prerequisite: rs.Prerequisite,
     };
+  }
+
+  @GrpcMethod('CourseService', 'GetStudyProgram')
+  async getStudyProgram() {
+    const studyProgram = await this.appService.getStudyProgram();
+    return { studyPrograms: studyProgram };
+  }
+
+  @GrpcMethod('CourseService', 'RegisterCourse')
+  async registerCourse(params: RegisterCourseRequestDto) {
+    return await this.appService.registerCourse(params);
   }
 }

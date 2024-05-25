@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from './prisma/prisma.service';
 import { GrpcMethod } from '@nestjs/microservices';
+import { RegisterCourseRequestDto } from './dtos/register-course-request.dto';
 
 @Injectable()
 export class AppService {
@@ -32,6 +33,22 @@ export class AppService {
     return await this.prismaService.course.findUnique({
       where: {
         id: id,
+      },
+    });
+  }
+
+  async getStudyProgram() {
+    console.log(await this.prismaService.studyProgram.findMany())
+    return await this.prismaService.studyProgram.findMany();
+  }
+
+  async registerCourse(params: RegisterCourseRequestDto) {
+    const student_id = params.studentId;
+    delete params.studentId;
+    return this.prismaService.classRegistered.create({
+      data: {
+        ...params,
+        student_id,
       },
     });
   }
