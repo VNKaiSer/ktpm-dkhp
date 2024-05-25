@@ -1,14 +1,11 @@
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { Body, Controller, Get, Header, Inject, OnModuleInit, Post, Req, UnauthorizedException } from '@nestjs/common';
-
+import { Body, Controller, Get, Inject, OnModuleInit, Post } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { lastValueFrom } from 'rxjs';
-import { AuthDto } from 'src/dto/auth.dto';
-import { LoginResponse } from 'src/dto/login-responsive.dto';
+import { AuthDto } from 'src/dtos/auth.dto';
+import { LoginResponse } from 'src/dtos/login-responsive.dto';
 import { Cache } from 'cache-manager';
 import { JwtService } from '@nestjs/jwt';
-import { Request } from 'express';
 
 @ApiTags('auth')
 @Controller('v1/auth')
@@ -63,26 +60,17 @@ export class AuthController implements OnModuleInit {
         }
     }
 
-    @Get('getCache')
-    @Header('authorization', 'null')
+    @Get('set-cache')
     async getCache(
-        @Req() req: Request
-    ) {
-        if (!req.headers.authorization) {
-            throw new UnauthorizedException('Missing authorization token');
-        }
-        console.log(req.headers.authorization);
-        // Xác thực người dùng từ token
-        const isValidUser = await this.validateUser(req.headers.authorization);
-        if (!isValidUser) {
-            throw new UnauthorizedException('Invalid authorization token');
-        }
 
-        // Lấy dữ liệu từ cache
-        return this.cacheManager.get('user_token_20116031');
+    ) {
+        await this.cacheManager.set('courses', 'Hello', 5000);
     }
 
-
-
-
+    @Get('get-cache')
+    async getCache2(
+        // @Req() req: Request
+    ) {
+        return await this.cacheManager.get('studyPrograms');
+    }
 }

@@ -8,8 +8,11 @@ import { CacheModule } from '@nestjs/cache-manager';
 import * as redisStore from 'cache-manager-redis-store';
 import { JwtService } from '@nestjs/jwt';
 import { CourseController } from './controllers/course.controller';
+import { KafkaModule } from './kafka/kafka.module';
+import type { RedisClientOptions } from 'redis';
 @Module({
   imports: [
+    KafkaModule,
     ClientsModule.register([
       {
         name: 'AUTH_SERVICE',
@@ -32,15 +35,14 @@ import { CourseController } from './controllers/course.controller';
         },
       },
     ]),
-    CacheModule.registerAsync({
-      useFactory: async () => ({
-        redis: {
-          store: redisStore,
-          host: process.env.REDIS_HOST,
-          port: process.env.REDIS_PORT
-        }
-      }),
+    CacheModule.register<RedisClientOptions>({
+      isGlobal: true,
+      store: redisStore,
+      // Store-specific configuration:
+      host: 'localhost',
+      port: 6379,
     }),
+
   ],
   controllers: [AuthController, CourseController],
   providers: [AppService, JwtService],
