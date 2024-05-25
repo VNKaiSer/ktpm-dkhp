@@ -8,20 +8,21 @@ datasource db {
 }
 
 model course {
-  id         String @id @default(auto()) @map("_id") @db.ObjectId
-  codeCourse String
-  codeSub    String
-  credits    Int
-  name       String
-  pracNum    Int
-  theoryNum  Int
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  Prerequisite String
+  codeCourse   String
+  codeSub      String
+  credits      Int
+  name         String
+  pracNum      Int
+  theoryNum    Int
 }
 
 model studyProgram {
   id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  /// Multiple data types found: Array(String): 50%, Array(String (ObjectId)): 50% out of 2 sampled entries
+  /// Multiple data types found: Array(String): 11.1%, Array(String (ObjectId)): 88.9% out of 9 sampled entries
   electiveCourses String[]
   requiredCourses String[]
   semester        String
-  totalCredits    String
+  totalCredits    Int
 }

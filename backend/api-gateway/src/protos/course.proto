@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package course;
+
+service CourseService {
+    rpc GetAllCourse(Empty) returns (CourseList) {}
+    rpc GetCourseById(CourseId) returns (Course) {}
+}
+
+message Empty {}
+
+message CourseList {
+    repeated Course courses = 1;
+}
+
+message Course {
+    string id = 1;        
+    string codeCourse = 2;
+    string codeSub = 3;
+    int32 credits = 4;
+    string name = 5;
+    int32 pracNum = 6;
+    int32 theoryNum = 7;
+}
+
+message CourseId {
+    string id = 1;
+}

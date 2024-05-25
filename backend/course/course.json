@@ -1,0 +1,325 @@
+[
+  {
+    "semester": "HỌC KÌ I",
+    "totalCredits": 1,
+    "requiredCourses": [
+      {
+        "$oid": "664db4c9b9007a9a763f4ba8"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4ba9"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4baa"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bab"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bac"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bad"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bae"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4baf"
+      }
+    ],
+    "electiveCourses": [
+      {
+        "$oid": "664db4c9b9007a9a763f4baf"
+      }
+    ]
+  },
+  {
+    "semester": "HỌC KÌ 2",
+    "totalCredits": 12,
+    "requiredCourses": [
+      {
+        "$oid": "664db4c9b9007a9a763f4bb0"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bb1"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bb2"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bb3"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bb4"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bb5"
+      }
+    ],
+    "electiveCourses": [
+      {
+        "$oid": "664db4c9b9007a9a763f4bb6"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bb7"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bb8"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bb9"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bba"
+      }
+    ]
+  },
+  {
+    "semester": "HỌC KÌ 3",
+    "totalCredits": 19,
+    "requiredCourses": [
+      {
+        "$oid": "664db4c9b9007a9a763f4bbb"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bbc"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bbd"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bbe"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bbf"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bc0"
+      }
+    ],
+    "electiveCourses": [
+      {
+        "$oid": "664db4c9b9007a9a763f4bc1"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bc2"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bc3"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bc4"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bc5"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bc6"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bc7"
+      }
+    ]
+  },
+  {
+    "semester": "HỌC KÌ 4",
+    "totalCredits": 19,
+    "requiredCourses": [
+      {
+        "$oid": "664db4c9b9007a9a763f4bc8"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bc9"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bca"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bcb"
+      }
+    ],
+    "electiveCourses": [
+      {
+        "$oid": "664db4c9b9007a9a763f4bcc"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bcd"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bce"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bcf"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bd0"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bd1"
+      }
+    ]
+  },
+  {
+    "semester": "HỌC KÌ 5",
+    "totalCredits": 16,
+    "requiredCourses": [
+      {
+        "$oid": "664db4c9b9007a9a763f4bd2"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bd3"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bd4"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bd5"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bd6"
+      }
+    ],
+    "electiveCourses": [
+      {
+        "$oid": "664db4c9b9007a9a763f4bd7"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bd8"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bd9"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bda"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bdb"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bdc"
+      }
+    ]
+  },
+  {
+    "semester": "HỌC KÌ 6",
+    "totalCredits": 18,
+    "requiredCourses": [
+      {
+        "$oid": "664db4c9b9007a9a763f4bdd"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bde"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bdf"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4be0"
+      }
+    ],
+    "electiveCourses": [
+      {
+        "$oid": "664db4c9b9007a9a763f4be1"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4be2"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4be3"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4be4"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4be5"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4be6"
+      }
+    ]
+  },
+  {
+    "semester": "HỌC KÌ 7",
+    "totalCredits": 15,
+    "requiredCourses": [
+      {
+        "$oid": "664db4c9b9007a9a763f4be7"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4be8"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4be9"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bea"
+      }
+    ],
+    "electiveCourses": [
+      {
+        "$oid": "664db4c9b9007a9a763f4beb"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bec"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bed"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bee"
+      }
+    ]
+  },
+  {
+    "semester": "HỌC KÌ 8",
+    "totalCredits": 15,
+    "requiredCourses": [
+      {
+        "$oid": "664db4c9b9007a9a763f4bef"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bf0"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bf1"
+      }
+    ],
+    "electiveCourses": [
+      {
+        "$oid": "664db4c9b9007a9a763f4bf2"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bf3"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bf4"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bf5"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bf6"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bf7"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bf8"
+      }
+    ]
+  },
+  {
+    "semester": "HỌC KÌ 9",
+    "totalCredits": 11,
+    "requiredCourses": [
+      {
+        "$oid": "664db4c9b9007a9a763f4bf9"
+      },
+      {
+        "$oid": "664db4c9b9007a9a763f4bfa"
+      }
+    ],
+    "electiveCourses": [""]
+  }
+]

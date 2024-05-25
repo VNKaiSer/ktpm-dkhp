@@ -1,6 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
-import { MessagePattern } from '@nestjs/microservices';
+import { GrpcMethod } from '@nestjs/microservices';
+import { CourseIdDto } from './dtos/course-id.dto';
 
 @Controller('v1/course')
 export class AppController {
@@ -11,14 +12,14 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @MessagePattern('get-module')
-  getModule() {
-    console.log('get module');
-    return this.appService.getModule();
+  @GrpcMethod('CourseService', 'GetAllCourse')
+  async getAllCourse() {
+    const rs = await this.appService.getAllCourse();
+    return rs;
   }
 
-  @Get('all-course')
-  async getAllCourse() {
-    return this.appService.getAllCourse();
+  @GrpcMethod('CourseService', 'GetCourseById')
+  async getCourseByID(parmas: CourseIdDto) {
+    return this.appService.getCourseByID(parmas.id);
   }
 }

@@ -2,7 +2,7 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Body, Controller, Get, Header, Inject, OnModuleInit, Post, Req, UnauthorizedException } from '@nestjs/common';
 
 import { ClientGrpc } from '@nestjs/microservices';
-import { ApiBody, ApiResponse } from '@nestjs/swagger';
+import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { lastValueFrom } from 'rxjs';
 import { AuthDto } from 'src/dto/auth.dto';
 import { LoginResponse } from 'src/dto/login-responsive.dto';
@@ -10,11 +10,13 @@ import { Cache } from 'cache-manager';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 
+@ApiTags('auth')
 @Controller('v1/auth')
 export class AuthController implements OnModuleInit {
     private usersService;
-    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache
+
     constructor(
+        @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
         @Inject('AUTH_SERVICE') private client: ClientGrpc,
         private jwtService: JwtService
     ) { }

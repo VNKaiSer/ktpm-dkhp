@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from './prisma/prisma.service';
+import { GrpcMethod } from '@nestjs/microservices';
 
 @Injectable()
 export class AppService {
@@ -11,9 +12,9 @@ export class AppService {
   getModule() {
     return 'Module';
   }
-
-  async getAllCourse() {
-    return await this.prismaService.course.findMany();
+  async getAllCourse(): Promise<any> {
+    const courses = await this.prismaService.course.findMany();
+    return { courses }
   }
 
   async getCourseByID(id: string) {

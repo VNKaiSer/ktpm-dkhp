@@ -7,6 +7,7 @@ import { AuthController } from './controllers/auth.controller';
 import { CacheModule } from '@nestjs/cache-manager';
 import * as redisStore from 'cache-manager-redis-store';
 import { JwtService } from '@nestjs/jwt';
+import { CourseController } from './controllers/course.controller';
 @Module({
   imports: [
     ClientsModule.register([
@@ -20,6 +21,17 @@ import { JwtService } from '@nestjs/jwt';
         },
       },
     ]),
+    ClientsModule.register([
+      {
+        name: 'COURSE_SERVICE',
+        transport: Transport.GRPC,
+        options: {
+          package: 'course',
+          protoPath: join(__dirname, 'protos/course.proto'),
+          url: 'localhost:50052',
+        },
+      },
+    ]),
     CacheModule.registerAsync({
       useFactory: async () => ({
         redis: {
@@ -30,7 +42,7 @@ import { JwtService } from '@nestjs/jwt';
       }),
     }),
   ],
-  controllers: [AuthController],
+  controllers: [AuthController, CourseController],
   providers: [AppService, JwtService],
 })
 export class AppModule { }
