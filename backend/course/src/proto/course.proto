@@ -7,6 +7,7 @@ service CourseService {
     rpc GetCourseById(CourseId) returns (Course) {}
     rpc GetStudyProgram(Empty) returns (StudyProgramList) {}
     rpc RegisterCourse(RegisterCourseRequest) returns (Empty) {}
+    rpc GetReclass(Empty) returns (RegisterCourseReponse) {}
 }
 
 message Empty {}
@@ -43,6 +44,21 @@ message StudyProgramList {
 }
 
 message RegisterCourseRequest {
+    string codeCourse = 1;
+    string name = 2;
+    string clsName = 3;
+    int32 credits = 4;
+    string teacher = 5;
+    string schedule = 6;
+    string status = 7;
+    string studentId = 8;
+}
+
+message RegisterCourseReponse {
+    repeated RegisterClass classes = 1;
+}
+
+message RegisterClass{
     string codeCourse = 1;
     string name = 2;
     string clsName = 3;

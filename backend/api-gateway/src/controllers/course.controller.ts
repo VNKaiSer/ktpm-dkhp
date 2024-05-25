@@ -85,6 +85,13 @@ export class CourseController implements OnModuleInit {
 
     }
 
+    @Get("/get-reclass")
+    @ApiResponse({ status: 200 })
+    async getReclass(): Promise<any> {
+        const result = await this.coursesService.GetReclass({});
+        return result
+    }
+
 
 
 

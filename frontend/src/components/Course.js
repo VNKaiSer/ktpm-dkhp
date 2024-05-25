@@ -52,9 +52,9 @@ const Course = () => {
     const fetchSP = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8081/v1/course/getAllstuPro"
+          "http://localhost:4000/api/v1/courses/study-program"
         );
-        setStudyProgram(response.data);
+        setStudyProgram(response.data.studyPrograms);
       } catch (error) {
         console.error("Error fetching SP:", error);
       }
@@ -62,9 +62,10 @@ const Course = () => {
     const fetchCls = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8081/v1/course/getReCls"
+          "http://localhost:4000/api/v1/courses/get-reclass"
         );
-        setRegisteredClasses(response.data);
+
+        setRegisteredClasses(response.data.classes);
       } catch (error) {
         console.error("Error fetching courses:", error);
       }
@@ -166,10 +167,10 @@ const Course = () => {
         teacher: "To be assigned",
         schedule: lich,
         status: trangThai,
-        student_id: studentData.studentId,
+        studentId: studentData.studentId,
       };
       axios
-        .post("http://localhost:8081/v1/course/create", newData)
+        .post("http://localhost:4000/api/v1/courses/register-course", newData)
         .then((response) => {
           console.log("New data added successfully:", response.data);
         })
@@ -453,7 +454,8 @@ const Course = () => {
             <tbody>
               {registeredClasses.map(
                 (cls, index) =>
-                  cls.student_id === studentData.studentId && (
+                  // console.log(cls) &&
+                  cls.studentId === studentData.studentId && (
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>{cls.codeCourse}</td>

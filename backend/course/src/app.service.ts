@@ -38,7 +38,6 @@ export class AppService {
   }
 
   async getStudyProgram() {
-    console.log(await this.prismaService.studyProgram.findMany())
     return await this.prismaService.studyProgram.findMany();
   }
 
@@ -51,5 +50,20 @@ export class AppService {
         student_id,
       },
     });
+  }
+
+  async getReclass() {
+    const reclass = await this.prismaService.classRegistered.findMany();
+    const updatedReclass = reclass.map((item) => ({
+      ...item,
+      studentId: item.student_id,
+      student_id: undefined,
+    }));
+
+    const finalReclass = updatedReclass.map(
+      ({ student_id, ...rest }) => rest,
+    );
+
+    return await finalReclass
   }
 }

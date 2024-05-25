@@ -38,4 +38,10 @@ export class AppController {
   async registerCourse(params: RegisterCourseRequestDto) {
     return await this.appService.registerCourse(params);
   }
+
+  @GrpcMethod('CourseService', 'GetReclass')
+  async getReclass() {
+    const reclass = await this.appService.getReclass();
+    return { classes: reclass };
+  }
 }
